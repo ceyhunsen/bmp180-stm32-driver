@@ -1,2 +1,3 @@
-# bmp180-lib-for-stm32
-BMP180 library for STM32
+# Introduction
+
+This project is BMP180 pressure sensor library for STM32. This library is tested on STM32 F407VG microcontroller.
