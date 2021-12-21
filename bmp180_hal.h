@@ -14,7 +14,7 @@ typedef struct bmp180_t {
 	float temperature;
 	float pressure;
 	float altitude;
-	uint32_t base_pressure;
+	uint32_t sea_pressure;
 
 	// Callibration data
 	int8_t   oss;
@@ -37,7 +37,9 @@ typedef struct bmp180_t {
 } bmp180_t;
 
 uint8_t BMP180_init(bmp180_t *bmp180, uint8_t oss);
+void BMP180_get_all(bmp180_t *bmp180);
 void BMP180_get_temperature(bmp180_t *bmp180);
 void BMP180_get_pressure(bmp180_t *bmp180);
+void BMP180_get_altitude(bmp180_t *bmp180);
 
 #endif

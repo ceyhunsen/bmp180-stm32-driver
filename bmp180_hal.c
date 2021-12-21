@@ -3,18 +3,27 @@
  * */
 
 #include "bmp180_hal.h"
+#include <math.h>
 
 extern I2C_HandleTypeDef hi2c1;
-#define BMP180_I2C &hi2c1
+#define BMP180_I2C      &hi2c1
 
-#define BMP180_BIN_ADDRESS (0b1110111 << 1)
-#define BMP180_WRITE_ADDRESS BMP180_BIN_ADDRESS         // 0xEE
-#define BMP180_READ_ADDRESS (BMP180_WRITE_ADDRESS + 1)  // 0xEF
-#define BMP180_REGISTER_START 0xAA
+#define BMP180_BIN_ADDRESS    (0b1110111 << 1)
+#define BMP180_WRITE_ADDRESS   BMP180_BIN_ADDRESS         // 0xEE
+#define BMP180_READ_ADDRESS   (BMP180_WRITE_ADDRESS + 1)  // 0xEF
+#define BMP180_REGISTER_START  0xAA
 
 #define cnvrt8to16(x, y) (((x) << 8) | (y))
-#define powerof2(x) (1 << (x))
+#define powerof2(x)      (1 << (x))
 
+static int32_t BMP180_read_ut(bmp180_t *bmp180);
+static int32_t BMP180_read_up(bmp180_t *bmp180);
+
+
+/**
+ * @brief Initialize callibration values
+ * @retval 0 on success, 1 on fail
+ * */
 uint8_t BMP180_init(bmp180_t *bmp180, uint8_t oss)
 {
 	uint8_t callibration_data[22];
@@ -44,8 +53,15 @@ uint8_t BMP180_init(bmp180_t *bmp180, uint8_t oss)
 	bmp180->MB  = cnvrt8to16(callibration_data[16], callibration_data[17]);
 	bmp180->MC  = cnvrt8to16(callibration_data[18], callibration_data[19]);
 	bmp180->MD  = cnvrt8to16(callibration_data[20], callibration_data[21]);
-	bmp180->base_pressure = 101325;
+	bmp180->sea_pressure = 101325;
 	return 0;
+}
+
+void BMP180_get_all(bmp180_t *bmp180)
+{
+	BMP180_get_temperature(bmp180);
+	BMP180_get_pressure(bmp180);
+	BMP180_get_altitude(bmp180);
 }
 
 static int32_t BMP180_read_ut(bmp180_t *bmp180)
@@ -77,6 +93,15 @@ static int32_t BMP180_read_up(bmp180_t *bmp180)
 	switch (bmp180->oss) {
 		case 0:
 			wait = 5;
+			break;
+		case 1:
+			wait = 8;
+			break;
+		case 2:
+			wait = 14;
+			break;
+		case 3:
+			wait = 26;
 			break;
 		default:
 			wait = 5;
@@ -111,4 +136,14 @@ void BMP180_get_pressure(bmp180_t *bmp180)
 	X2 = (-7357 * p) / powerof2(16);
 	p = p + (X1 + X2 + 3791) / powerof2(4);
 	bmp180->pressure = p;
+}
+
+void BMP180_get_altitude(bmp180_t *bmp180)
+{
+	bmp180->altitude = 44330 * (1 - pow((bmp180->pressure / bmp180->sea_pressure), 1 / 5.255));
+}
+
+void BMP180_set_sea_pressure(bmp180_t *bmp180, uint32_t sea_pressure)
+{
+	bmp180->sea_pressure = sea_pressure;
 }
