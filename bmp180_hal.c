@@ -1,12 +1,13 @@
-/*!
+/**
  * @author Ceyhun Sen
  * */
 
 #include "bmp180_hal.h"
 #include <math.h>
 
-extern I2C_HandleTypeDef hi2c1;
-#define BMP180_I2C      &hi2c1
+#define I2C_HANDLE        hi2c1
+extern  I2C_HandleTypeDef I2C_HANDLE;
+#define BMP180_I2C       &I2C_HANDLE
 
 #define BMP180_BIN_ADDRESS    (0b1110111 << 1)
 #define BMP180_WRITE_ADDRESS   BMP180_BIN_ADDRESS         // 0xEE
