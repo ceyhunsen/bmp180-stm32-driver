@@ -41,5 +41,6 @@ void BMP180_get_all(bmp180_t *bmp180);
 void BMP180_get_temperature(bmp180_t *bmp180);
 void BMP180_get_pressure(bmp180_t *bmp180);
 void BMP180_get_altitude(bmp180_t *bmp180);
+void BMP180_set_sea_pressure(bmp180_t *bmp180, uint32_t sea_pressure);
 
 #endif
