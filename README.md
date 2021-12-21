@@ -60,3 +60,7 @@ Calculates altitude. Writes value to parameter `bmp180` pointer.
 * `void BMP180_set_sea_pressure(bmp180_t *bmp180, uint32_t sea_pressure)`
 
 Sets sea pressure. Changes `sea_pressure` member of the given `bmp180_t` pointer parameter. Default `sea_pressure` value is 101325;
+
+# License
+
+[MIT License](LICENSE)
