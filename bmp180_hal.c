@@ -27,6 +27,10 @@ static int32_t BMP180_read_up(bmp180_t *bmp180);
  * */
 uint8_t BMP180_init(bmp180_t *bmp180, uint8_t oss)
 {
+	// Check if device is ready
+	if (HAL_I2C_IsDeviceReady(BMP180_I2C, BMP180_WRITE_ADDRESS, 1, HAL_MAX_DELAY) != HAL_OK)
+		return 1;
+
 	uint8_t callibration_data[22];
 	HAL_I2C_Mem_Read(BMP180_I2C, BMP180_READ_ADDRESS, BMP180_REGISTER_START, 1, callibration_data, 22, HAL_MAX_DELAY);
 
