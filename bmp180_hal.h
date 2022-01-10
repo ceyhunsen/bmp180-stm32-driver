@@ -7,8 +7,8 @@
 
 #define HAL_LIB "stm32f4xx_hal.h"
 
-#include <stdint.h>
 #include HAL_LIB
+#include <stdint.h>
 
 typedef struct bmp180_t {
 	float temperature;
@@ -16,8 +16,10 @@ typedef struct bmp180_t {
 	float altitude;
 	uint32_t sea_pressure;
 
-	// Callibration data
+	// Settings
 	int8_t   oss;
+
+	// Callibration data
 	int16_t  AC1;
 	int16_t  AC2;
 	int16_t  AC3;
@@ -36,11 +38,11 @@ typedef struct bmp180_t {
 	int16_t  MD;
 } bmp180_t;
 
-uint8_t BMP180_init(bmp180_t *bmp180, uint8_t oss);
-void BMP180_get_all(bmp180_t *bmp180);
-void BMP180_get_temperature(bmp180_t *bmp180);
-void BMP180_get_pressure(bmp180_t *bmp180);
-void BMP180_get_altitude(bmp180_t *bmp180);
-void BMP180_set_sea_pressure(bmp180_t *bmp180, uint32_t sea_pressure);
+uint8_t BMP180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, uint8_t oss);
+void BMP180_get_all(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void BMP180_get_temperature(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void BMP180_get_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void BMP180_get_altitude(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void BMP180_set_sea_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, uint32_t sea_pressure);
 
 #endif
