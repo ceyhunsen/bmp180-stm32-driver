@@ -22,7 +22,7 @@ copyright = '2022, Ceyhun Şen'
 author = 'Ceyhun Şen'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = ''
 
 
 # -- General configuration ---------------------------------------------------
