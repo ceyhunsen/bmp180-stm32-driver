@@ -53,3 +53,21 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# Doxygen stuff
+import subprocess
+
+subprocess.call('doxygen Doxyfile', shell=True)
+
+# Breath stuff
+from sphinx.builders.html import StandaloneHTMLBuilder
+
+extensions = [
+    'breathe'
+]
+
+breathe_projects = {
+	"bmp180-driver": "_build/xml/"
+}
+breathe_default_project = "bmp180-driver"
+breathe_default_members = ('members', 'undoc-members')

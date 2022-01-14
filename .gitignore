@@ -51,5 +51,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# Read the Docs
+# Read the Docs and Doxygen
 docs/_build/
+docs/_static/
+docs/_templates/
