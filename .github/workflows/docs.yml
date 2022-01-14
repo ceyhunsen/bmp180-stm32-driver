@@ -22,7 +22,7 @@ jobs:
     - name: Build docs
       run: cd docs
         && make html
-        && cp _build/html/index.html .
+        && cp _build/html/* .
         && cd _build/html
         && touch .nojekyll
     - name: Deploy

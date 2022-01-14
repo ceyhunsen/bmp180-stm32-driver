@@ -52,6 +52,3 @@ Mkfile.old
 dkms.conf
 
 # Read the Docs and Doxygen
-docs/_build/
-docs/_static/
-docs/_templates/

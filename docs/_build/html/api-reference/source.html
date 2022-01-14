@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Source File &mdash; BMP180 STM32 Driver  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Header File" href="header.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> BMP180 STM32 Driver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/index.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="header.html">Header File</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Source File</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BMP180 STM32 Driver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">API Reference</a> &raquo;</li>
+      <li>Source File</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api-reference/source.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="source-file">
+<h1>Source File<a class="headerlink" href="#source-file" title="Permalink to this headline"></a></h1>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.BMP180_BIN_ADDRESS">
+<span class="target" id="bmp180__hal_8c_1a2898c606f114bdbeecde57cf9ddbd7f5"></span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_BIN_ADDRESS</span></span></span><a class="headerlink" href="#c.BMP180_BIN_ADDRESS" title="Permalink to this definition"></a><br /></dt>
+<dd><p><dl class="simple">
+<dt><strong>Author</strong></dt><dd><p>Ceyhun Sen </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.BMP180_ADDRESS">
+<span class="target" id="bmp180__hal_8c_1acf911c35c81cbcb255d48ff88944dcd7"></span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_ADDRESS</span></span></span><a class="headerlink" href="#c.BMP180_ADDRESS" title="Permalink to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.REGISTER_START">
+<span class="target" id="bmp180__hal_8c_1ae9b29e2ce42c93a62365b2a578c64bec"></span><span class="sig-name descname"><span class="n"><span class="pre">REGISTER_START</span></span></span><a class="headerlink" href="#c.REGISTER_START" title="Permalink to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.CHIP_ID">
+<span class="target" id="bmp180__hal_8c_1ab0aa3e54cd2934b67b9882957456c391"></span><span class="sig-name descname"><span class="n"><span class="pre">CHIP_ID</span></span></span><a class="headerlink" href="#c.CHIP_ID" title="Permalink to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.cnvrt8to16">
+<span class="target" id="bmp180__hal_8c_1a97de150e241b2dcae42ee841c4f54ca3"></span><span class="sig-name descname"><span class="n"><span class="pre">cnvrt8to16</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span>, <span class="n"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cnvrt8to16" title="Permalink to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.powerof2">
+<span class="target" id="bmp180__hal_8c_1a2766c9b72579fe88c4f337b4e007c8a7"></span><span class="sig-name descname"><span class="n"><span class="pre">powerof2</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.powerof2" title="Permalink to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv414BMP180_read_utP17I2C_HandleTypeDefP8bmp180_t">
+<span id="_CPPv314BMP180_read_utP17I2C_HandleTypeDefP8bmp180_t"></span><span id="_CPPv214BMP180_read_utP17I2C_HandleTypeDefP8bmp180_t"></span><span id="BMP180_read_ut__I2C_HandleTypeDefP.bmp180_tP"></span><span class="target" id="bmp180__hal_8c_1a3ac0ea06ca9a26e1b1d68078053e6964"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_read_ut</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I2C_HandleTypeDef</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hi2cx</span></span>, <a class="reference internal" href="header.html#_CPPv48bmp180_t" title="bmp180_t"><span class="n"><span class="pre">bmp180_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">bmp180</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414BMP180_read_utP17I2C_HandleTypeDefP8bmp180_t" title="Permalink to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv414BMP180_read_upP17I2C_HandleTypeDefP8bmp180_t">
+<span id="_CPPv314BMP180_read_upP17I2C_HandleTypeDefP8bmp180_t"></span><span id="_CPPv214BMP180_read_upP17I2C_HandleTypeDefP8bmp180_t"></span><span id="BMP180_read_up__I2C_HandleTypeDefP.bmp180_tP"></span><span class="target" id="bmp180__hal_8c_1afb1ffee3814d35ba3c7bcba66ce56d57"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_read_up</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I2C_HandleTypeDef</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hi2cx</span></span>, <a class="reference internal" href="header.html#_CPPv48bmp180_t" title="bmp180_t"><span class="n"><span class="pre">bmp180_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">bmp180</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414BMP180_read_upP17I2C_HandleTypeDefP8bmp180_t" title="Permalink to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv411BMP180_initP17I2C_HandleTypeDefP8bmp180_t7uint8_t">
+<span id="_CPPv311BMP180_initP17I2C_HandleTypeDefP8bmp180_t7uint8_t"></span><span id="_CPPv211BMP180_initP17I2C_HandleTypeDefP8bmp180_t7uint8_t"></span><span id="BMP180_init__I2C_HandleTypeDefP.bmp180_tP.uint8_t"></span><span class="target" id="bmp180__hal_8c_1a1bf6d9e076ce7c192db6d1505463c2f3"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_init</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I2C_HandleTypeDef</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hi2cx</span></span>, <a class="reference internal" href="header.html#_CPPv48bmp180_t" title="bmp180_t"><span class="n"><span class="pre">bmp180_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">bmp180</span></span>, <span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">oss</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Initialize callibration values. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>0</strong> – on success, 1 on fail </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv414BMP180_get_allP17I2C_HandleTypeDefP8bmp180_t">
+<span id="_CPPv314BMP180_get_allP17I2C_HandleTypeDefP8bmp180_t"></span><span id="_CPPv214BMP180_get_allP17I2C_HandleTypeDefP8bmp180_t"></span><span id="BMP180_get_all__I2C_HandleTypeDefP.bmp180_tP"></span><span class="target" id="bmp180__hal_8c_1af57a5c3bb77d11ebbbeb0b1be69cba62"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_get_all</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I2C_HandleTypeDef</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hi2cx</span></span>, <a class="reference internal" href="header.html#_CPPv48bmp180_t" title="bmp180_t"><span class="n"><span class="pre">bmp180_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">bmp180</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv422BMP180_get_temperatureP17I2C_HandleTypeDefP8bmp180_t">
+<span id="_CPPv322BMP180_get_temperatureP17I2C_HandleTypeDefP8bmp180_t"></span><span id="_CPPv222BMP180_get_temperatureP17I2C_HandleTypeDefP8bmp180_t"></span><span id="BMP180_get_temperature__I2C_HandleTypeDefP.bmp180_tP"></span><span class="target" id="bmp180__hal_8c_1a030537d8895a417b4a75007a83fe20a5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_get_temperature</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I2C_HandleTypeDef</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hi2cx</span></span>, <a class="reference internal" href="header.html#_CPPv48bmp180_t" title="bmp180_t"><span class="n"><span class="pre">bmp180_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">bmp180</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv419BMP180_get_pressureP17I2C_HandleTypeDefP8bmp180_t">
+<span id="_CPPv319BMP180_get_pressureP17I2C_HandleTypeDefP8bmp180_t"></span><span id="_CPPv219BMP180_get_pressureP17I2C_HandleTypeDefP8bmp180_t"></span><span id="BMP180_get_pressure__I2C_HandleTypeDefP.bmp180_tP"></span><span class="target" id="bmp180__hal_8c_1a7bea00339ccf04f30f7cdbe423432b21"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_get_pressure</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I2C_HandleTypeDef</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hi2cx</span></span>, <a class="reference internal" href="header.html#_CPPv48bmp180_t" title="bmp180_t"><span class="n"><span class="pre">bmp180_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">bmp180</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv419BMP180_get_altitudeP17I2C_HandleTypeDefP8bmp180_t">
+<span id="_CPPv319BMP180_get_altitudeP17I2C_HandleTypeDefP8bmp180_t"></span><span id="_CPPv219BMP180_get_altitudeP17I2C_HandleTypeDefP8bmp180_t"></span><span id="BMP180_get_altitude__I2C_HandleTypeDefP.bmp180_tP"></span><span class="target" id="bmp180__hal_8c_1a105fd869b1733c68652c2c28b974d39a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_get_altitude</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I2C_HandleTypeDef</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hi2cx</span></span>, <a class="reference internal" href="header.html#_CPPv48bmp180_t" title="bmp180_t"><span class="n"><span class="pre">bmp180_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">bmp180</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv423BMP180_set_sea_pressureP17I2C_HandleTypeDefP8bmp180_t8uint32_t">
+<span id="_CPPv323BMP180_set_sea_pressureP17I2C_HandleTypeDefP8bmp180_t8uint32_t"></span><span id="_CPPv223BMP180_set_sea_pressureP17I2C_HandleTypeDefP8bmp180_t8uint32_t"></span><span id="BMP180_set_sea_pressure__I2C_HandleTypeDefP.bmp180_tP.uint32_t"></span><span class="target" id="bmp180__hal_8c_1a6ddcc66a416ca0d5cbbe4dacf3bc29b4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BMP180_set_sea_pressure</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I2C_HandleTypeDef</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hi2cx</span></span>, <a class="reference internal" href="header.html#_CPPv48bmp180_t" title="bmp180_t"><span class="n"><span class="pre">bmp180_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">bmp180</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">sea_pressure</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="header.html" class="btn btn-neutral float-left" title="Header File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Ceyhun Şen.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

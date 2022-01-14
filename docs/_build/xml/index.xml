@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.9.1" xml:lang="en-US">
+  <compound refid="structbmp180__t" kind="struct"><name>bmp180_t</name>
+    <member refid="structbmp180__t_1a19d3cc410a0df02c81eebcfe1d25f7fd" kind="variable"><name>temperature</name></member>
+    <member refid="structbmp180__t_1a51984b073f4d71b8ea4051c153f68153" kind="variable"><name>pressure</name></member>
+    <member refid="structbmp180__t_1a611811525f37013c326b079434b8a3ea" kind="variable"><name>altitude</name></member>
+    <member refid="structbmp180__t_1a30bee46ae3c1c2b73df06530f1fa1883" kind="variable"><name>sea_pressure</name></member>
+    <member refid="structbmp180__t_1a77269a722b26356576aaab5ceaec27a4" kind="variable"><name>oss</name></member>
+    <member refid="structbmp180__t_1ac8ae7141c16dc0630e2cae9411fe42ba" kind="variable"><name>AC1</name></member>
+    <member refid="structbmp180__t_1a3434643ee9b46d4b8f871280031730fc" kind="variable"><name>AC2</name></member>
+    <member refid="structbmp180__t_1ae4449d6a418332fdc0cce935b8188716" kind="variable"><name>AC3</name></member>
+    <member refid="structbmp180__t_1a78cc7186d8be4f178d03f91d0ab5a2e6" kind="variable"><name>AC4</name></member>
+    <member refid="structbmp180__t_1ad4752f7e8e9858cc86a4549c124c8de9" kind="variable"><name>AC5</name></member>
+    <member refid="structbmp180__t_1ad7cb1bfd7990618f7209838db0246f85" kind="variable"><name>AC6</name></member>
+    <member refid="structbmp180__t_1a08748033df433fbc2105d3feefe0eb89" kind="variable"><name>B1</name></member>
+    <member refid="structbmp180__t_1ac16c9f4663082cee09f00a00990629ad" kind="variable"><name>B2</name></member>
+    <member refid="structbmp180__t_1a81ebd6ffb95889f90622059bb6babe9d" kind="variable"><name>B3</name></member>
+    <member refid="structbmp180__t_1abc08dc073d633440a727d65b6e4f60c3" kind="variable"><name>B4</name></member>
+    <member refid="structbmp180__t_1aff5de25999487b4c6628da5c832f23c6" kind="variable"><name>B5</name></member>
+    <member refid="structbmp180__t_1ab604591935c57961a0c38eea748d9c26" kind="variable"><name>B6</name></member>
+    <member refid="structbmp180__t_1a600caae7cabc4a2855c1bec329d477b4" kind="variable"><name>B7</name></member>
+    <member refid="structbmp180__t_1affccce9ff348d80a2d11fc4c6178ecf3" kind="variable"><name>MB</name></member>
+    <member refid="structbmp180__t_1ae3fa7f9ce3dd4130edbb4376905a5c9a" kind="variable"><name>MC</name></member>
+    <member refid="structbmp180__t_1a60620db0f3345ba2bec1ad8855eb9e82" kind="variable"><name>MD</name></member>
+  </compound>
+  <compound refid="bmp180__hal_8c" kind="file"><name>bmp180_hal.c</name>
+    <member refid="bmp180__hal_8c_1a2898c606f114bdbeecde57cf9ddbd7f5" kind="define"><name>BMP180_BIN_ADDRESS</name></member>
+    <member refid="bmp180__hal_8c_1acf911c35c81cbcb255d48ff88944dcd7" kind="define"><name>BMP180_ADDRESS</name></member>
+    <member refid="bmp180__hal_8c_1ae9b29e2ce42c93a62365b2a578c64bec" kind="define"><name>REGISTER_START</name></member>
+    <member refid="bmp180__hal_8c_1ab0aa3e54cd2934b67b9882957456c391" kind="define"><name>CHIP_ID</name></member>
+    <member refid="bmp180__hal_8c_1a97de150e241b2dcae42ee841c4f54ca3" kind="define"><name>cnvrt8to16</name></member>
+    <member refid="bmp180__hal_8c_1a2766c9b72579fe88c4f337b4e007c8a7" kind="define"><name>powerof2</name></member>
+    <member refid="bmp180__hal_8c_1a3ac0ea06ca9a26e1b1d68078053e6964" kind="function"><name>BMP180_read_ut</name></member>
+    <member refid="bmp180__hal_8c_1afb1ffee3814d35ba3c7bcba66ce56d57" kind="function"><name>BMP180_read_up</name></member>
+    <member refid="bmp180__hal_8c_1a1bf6d9e076ce7c192db6d1505463c2f3" kind="function"><name>BMP180_init</name></member>
+    <member refid="bmp180__hal_8c_1af57a5c3bb77d11ebbbeb0b1be69cba62" kind="function"><name>BMP180_get_all</name></member>
+    <member refid="bmp180__hal_8c_1a030537d8895a417b4a75007a83fe20a5" kind="function"><name>BMP180_get_temperature</name></member>
+    <member refid="bmp180__hal_8c_1a7bea00339ccf04f30f7cdbe423432b21" kind="function"><name>BMP180_get_pressure</name></member>
+    <member refid="bmp180__hal_8c_1a105fd869b1733c68652c2c28b974d39a" kind="function"><name>BMP180_get_altitude</name></member>
+    <member refid="bmp180__hal_8c_1a6ddcc66a416ca0d5cbbe4dacf3bc29b4" kind="function"><name>BMP180_set_sea_pressure</name></member>
+  </compound>
+  <compound refid="bmp180__hal_8h" kind="file"><name>bmp180_hal.h</name>
+    <member refid="bmp180__hal_8h_1a232f5b4c91dfeb0942b3a352bfe41a06" kind="define"><name>HAL_LIB</name></member>
+    <member refid="bmp180__hal_8h_1a5434803771584ca0b5ff4f35940f9faf" kind="typedef"><name>bmp180_t</name></member>
+    <member refid="bmp180__hal_8h_1a1bf6d9e076ce7c192db6d1505463c2f3" kind="function"><name>BMP180_init</name></member>
+    <member refid="bmp180__hal_8h_1af57a5c3bb77d11ebbbeb0b1be69cba62" kind="function"><name>BMP180_get_all</name></member>
+    <member refid="bmp180__hal_8h_1a030537d8895a417b4a75007a83fe20a5" kind="function"><name>BMP180_get_temperature</name></member>
+    <member refid="bmp180__hal_8h_1a7bea00339ccf04f30f7cdbe423432b21" kind="function"><name>BMP180_get_pressure</name></member>
+    <member refid="bmp180__hal_8h_1a105fd869b1733c68652c2c28b974d39a" kind="function"><name>BMP180_get_altitude</name></member>
+    <member refid="bmp180__hal_8h_1a6ddcc66a416ca0d5cbbe4dacf3bc29b4" kind="function"><name>BMP180_set_sea_pressure</name></member>
+  </compound>
+  <compound refid="README_8md" kind="file"><name>README.md</name>
+  </compound>
+  <compound refid="md__home_ceyhunsen_Documents_projects_bmp180_stm32_driver_README" kind="page"><name>md__home_ceyhunsen_Documents_projects_bmp180_stm32_driver_README</name>
+  </compound>
+</doxygenindex>
