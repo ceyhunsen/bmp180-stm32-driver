@@ -13,6 +13,5 @@ jobs:
 
     steps:
     - name: Build docs
-      run: cd docs
-        && touch .nojekyll
+      run: touch .nojekyll
         && cp _build/html/* .
