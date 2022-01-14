@@ -9,14 +9,14 @@ on:
 
 jobs:
   build:
-    runs-on: fedora-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Requirements
-      run: dnf install -y doxygen
-        && dnf install -y python3-sphynix
+      run: apt install -y doxygen
+        && pip3 install sphinx-doc
         && pip3 install sphinx-rtd-theme
-        && dnf install -y python3-breathe
+        && pip3 install breathe
     - name: Checkout repo
       uses: actions/checkout@1.0.0
     - name: Build docs
