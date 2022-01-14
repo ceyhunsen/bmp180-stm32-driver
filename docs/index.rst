@@ -1,7 +1,7 @@
 Introduction
 ============
 
-This documentation is for STM32 BMP180 driver. Source code is available at `Github <https://github.com/ceyhunsen/bmp180-stm32-driver>`_.
+Welcome to the documentation of STM32 I2C driver for BMP180. Source code is available at `Github <https://github.com/ceyhunsen/bmp180-stm32-driver>`_.
 
 .. toctree::
     :maxdepth: 3
