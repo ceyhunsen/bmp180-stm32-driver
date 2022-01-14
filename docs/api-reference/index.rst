@@ -1,8 +1,5 @@
 API Reference
 =============
 
-.. toctree::
-    :maxdepth: 2
-
-    header
-    source
+.. doxygenfile:: bmp180_hal.h
+   :project: bmp180-driver

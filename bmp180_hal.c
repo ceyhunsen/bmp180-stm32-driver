@@ -1,16 +1,20 @@
 /**
- * @author Ceyhun Sen
+ * @file
+ * @author Ceyhun Şen
  * */
 
 #include "bmp180_hal.h"
 #include <math.h>
 
+// Slave address
 #define BMP180_BIN_ADDRESS     0b1110111
 #define BMP180_ADDRESS        (BMP180_BIN_ADDRESS << 1)
 
+// Registers
 #define REGISTER_START         0xAA
 #define CHIP_ID                0xD0
 
+// Private defines and functions
 #define cnvrt8to16(x, y) (((x) << 8) | (y))
 #define powerof2(x)      (1 << (x))
 
@@ -19,8 +23,11 @@ static int32_t BMP180_read_up(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
 
 
 /**
- * @brief Initialize callibration values
- * @retval 0 on success, 1 on fail
+ * @brief Initialize sensor and get callibration values.
+ * @returns 0 on success, 1 on failure.
+ * @param hi2cx I2C handle.
+ * @param bmp180 `bmp180_t` struct to initialize.
+ * @param oss Over sampling setting.
  * */
 uint8_t BMP180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, uint8_t oss)
 {
@@ -67,6 +74,9 @@ uint8_t BMP180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, uint8_t oss)
 	return 0;
 }
 
+/**
+ * @brief Get all sensor data at once.
+ * */
 void BMP180_get_all(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
 	BMP180_get_temperature(hi2cx, bmp180);
@@ -84,6 +94,9 @@ static int32_t BMP180_read_ut(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 	return (cnvrt8to16(ut_data[0], ut_data[1]));
 }
 
+/**
+ * @brief Get temperature data.
+ * */
 void BMP180_get_temperature(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
 	int32_t ut = BMP180_read_ut(hi2cx, bmp180);
@@ -122,6 +135,9 @@ static int32_t BMP180_read_up(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 	return ((up_data[0] << 16) + (up_data[1] << 8) + up_data[2]) >> (8 - bmp180->oss);
 }
 
+/**
+ * @brief Get pressure data.
+ * */
 void BMP180_get_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
 	int32_t X1, X2, X3, up = BMP180_read_up(hi2cx, bmp180), p;
@@ -148,11 +164,17 @@ void BMP180_get_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 	bmp180->pressure = p;
 }
 
+/**
+ * @brief Get altitude data.
+ * */
 void BMP180_get_altitude(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
 	bmp180->altitude = 44330 * (1 - pow((bmp180->pressure / bmp180->sea_pressure), 1 / 5.255));
 }
 
+/**
+ * @brief Set sea pressure.
+ * */
 void BMP180_set_sea_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, uint32_t sea_pressure)
 {
 	bmp180->sea_pressure = sea_pressure;

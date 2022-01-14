@@ -1,16 +1,27 @@
 /**
- * @author Ceyhun Sen
+ * @file bmp180_hal.h
+ * @author Ceyhun Şen
  * */
 
 #ifndef __BMP180_H
 #define __BMP180_H
 
+/**
+ * @def HAL_LIB
+ * HAL library.
+ * Change this definition to your MCU's HAL library. E.g. "stm32f4xx_hal.h".
+ * */
 #define HAL_LIB "stm32f4xx_hal.h"
 
 #include HAL_LIB
 #include <stdint.h>
 
+/**
+ * @struct bmp180_t bmp180_hal.h bmp180_hal.h
+ * @brief Holds sensor data, sensor settings and callibration values.
+ * */
 typedef struct bmp180_t {
+	// Sensor data
 	float temperature;
 	float pressure;
 	float altitude;
