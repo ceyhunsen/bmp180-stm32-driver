@@ -1,0 +1,30 @@
+name: Docs
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  
+jobs:
+  build:
+
+    runs-on: fedora-latest
+
+    steps:
+    - name: Requirements
+      run: dnf install -y doxygen
+        && dnf install -y python3-sphynix
+        && pip3 install sphinx-rtd-theme
+        && dnf install -y python3-breathe
+    - name: Checkout repo
+      uses: actions/checkout@1.0.0
+    - name: Build docs
+      run: cd docs
+        && make html
+    - name: Deploy
+      uses: ceyhunsen/github-pages-deploy-action@releases/v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: docs_sphinx/_build/html # The folder the action should deploy.
