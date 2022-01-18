@@ -1,0 +1,1 @@
+This directory includes files for documentation. If you want to see documentation online you can check [this](https://bmp180-stm32-driver.readthedocs.io/en/latest/). Also you can run `make html` at this directory to create html files locally.

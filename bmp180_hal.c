@@ -7,29 +7,30 @@
 #include <math.h>
 
 // Slave address
-#define BMP180_BIN_ADDRESS     0b1110111
-#define BMP180_ADDRESS        (BMP180_BIN_ADDRESS << 1)
+#define BMP180_7_BIT_ADDRESS         0b1110111
+#define BMP180_ADDRESS              (BMP180_7_BIT_ADDRESS << 1)
 
 // Registers
-#define REGISTER_START         0xAA
-#define CHIP_ID                0xD0
+#define CALLIBRATION_COEF_REGISTERS  0xAA
+#define CHIP_ID                      0xD0
 
 // Private defines and functions
 #define cnvrt8to16(x, y) (((x) << 8) | (y))
 #define powerof2(x)      (1 << (x))
 
-static int32_t BMP180_read_ut(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+// Private function prototypes
+static int16_t BMP180_read_ut(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
 static int32_t BMP180_read_up(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
 
 
 /**
  * @brief Initialize sensor and get callibration values.
- * @returns 0 on success, 1 on failure.
+ * @returns 0 on success, 1 on sensor is not ready, 2 on sensor error.
  * @param hi2cx I2C handle.
  * @param bmp180 `bmp180_t` struct to initialize.
  * @param oss Over sampling setting.
  * */
-uint8_t BMP180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, uint8_t oss)
+uint8_t BMP180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
 	// Check if device is ready
 	if (HAL_I2C_IsDeviceReady(hi2cx, BMP180_ADDRESS, 1, HAL_MAX_DELAY) != HAL_OK)
@@ -40,20 +41,38 @@ uint8_t BMP180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, uint8_t oss)
 	// Check if device ID is correct
 	HAL_I2C_Mem_Read(hi2cx, BMP180_ADDRESS, CHIP_ID, 1, buffer, 1, HAL_MAX_DELAY);
 	if (buffer[0] != 0x55) {
-		return 1;
+		return 2;
 	}
 
-	HAL_I2C_Mem_Read(hi2cx, BMP180_ADDRESS, REGISTER_START, 1, buffer, 22, HAL_MAX_DELAY);
+	HAL_I2C_Mem_Read(hi2cx, BMP180_ADDRESS, CALLIBRATION_COEF_REGISTERS, 1, buffer, 22, HAL_MAX_DELAY);
 
 	// If any of the callibration data is 0x00 or 0xFF, the sensor is damaged
 	for (uint8_t i = 0; i < 22; i += 2) {
 		uint16_t combined_callibration_data = cnvrt8to16(buffer[i], buffer[i + 1]);
 		if (combined_callibration_data == 0x00 || combined_callibration_data == 0XFF) {
-			return 1;
+			return 2;
 		}
 	}
 
-	bmp180->oss = oss;
+	switch (bmp180->oversampling_setting) {
+		case ultra_low_power:
+			bmp180->oss = 0;
+			break;
+		case standart:
+			bmp180->oss = 1;
+			break;
+		case high_resolution:
+			bmp180->oss = 2;
+			break;
+		case ultra_high_resolution:
+			bmp180->oss = 3;
+			break;
+		default:
+			bmp180->oversampling_setting = standart;
+			bmp180->oss = 1;
+			break;
+	}
+
 	bmp180->AC1 = cnvrt8to16(buffer[0],  buffer[1]);
 	bmp180->AC2 = cnvrt8to16(buffer[2],  buffer[3]);
 	bmp180->AC3 = cnvrt8to16(buffer[4],  buffer[5]);
@@ -76,6 +95,9 @@ uint8_t BMP180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, uint8_t oss)
 
 /**
  * @brief Get all sensor data at once.
+ * @param hi2cx I2C handle.
+ * @param bmp180 `bmp180_t` struct to write data.
+ * @retval None.
  * */
 void BMP180_get_all(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
@@ -84,7 +106,7 @@ void BMP180_get_all(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 	BMP180_get_altitude(hi2cx, bmp180);
 }
 
-static int32_t BMP180_read_ut(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
+static int16_t BMP180_read_ut(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
 	uint8_t write_data = 0x2E, ut_data[2];
 
@@ -94,36 +116,22 @@ static int32_t BMP180_read_ut(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 	return (cnvrt8to16(ut_data[0], ut_data[1]));
 }
 
-/**
- * @brief Get temperature data.
- * */
-void BMP180_get_temperature(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
-{
-	int32_t ut = BMP180_read_ut(hi2cx, bmp180);
-	int32_t X1, X2;
-
-	X1 = (ut - bmp180->AC6) * bmp180->AC5 / powerof2(15);
-	X2 = bmp180->MC * powerof2(11) / (X1 + bmp180->MD);
-	bmp180->B5 = X1 + X2;
-	bmp180->temperature = ((bmp180->B5 + 8) / powerof2(4)) / 10.0;
-}
-
 static int32_t BMP180_read_up(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
-	uint8_t write_data = 0x34 + ((bmp180->oss << 6)), up_data[3];
+	uint8_t write_data = 0x34 + (bmp180->oss << 6), up_data[3];
 	HAL_I2C_Mem_Write(hi2cx, BMP180_ADDRESS, 0xF4, 1, &write_data, 1, HAL_MAX_DELAY);
 	uint8_t wait = 0;
-	switch (bmp180->oss) {
-		case 0:
+	switch (bmp180->oversampling_setting) {
+		case ultra_low_power:
 			wait = 5;
 			break;
-		case 1:
+		case standart:
 			wait = 8;
 			break;
-		case 2:
+		case high_resolution:
 			wait = 14;
 			break;
-		case 3:
+		case ultra_high_resolution:
 			wait = 26;
 			break;
 		default:
@@ -136,7 +144,27 @@ static int32_t BMP180_read_up(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 }
 
 /**
+ * @brief Get temperature data.
+ * @param hi2cx I2C handle.
+ * @param bmp180 `bmp180_t` struct to write data.
+ * @retval None.
+ * */
+void BMP180_get_temperature(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
+{
+	int16_t ut = BMP180_read_ut(hi2cx, bmp180);
+	int32_t X1, X2;
+
+	X1 = (ut - bmp180->AC6) * bmp180->AC5 / powerof2(15);
+	X2 = bmp180->MC * powerof2(11) / (X1 + bmp180->MD);
+	bmp180->B5 = X1 + X2;
+	bmp180->temperature = ((bmp180->B5 + 8) / powerof2(4)) / 10.0;
+}
+
+/**
  * @brief Get pressure data.
+ * @param hi2cx I2C handle.
+ * @param bmp180 `bmp180_t` struct to write data.
+ * @retval None.
  * */
 void BMP180_get_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
@@ -166,6 +194,9 @@ void BMP180_get_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 
 /**
  * @brief Get altitude data.
+ * @param hi2cx I2C handle.
+ * @param bmp180 `bmp180_t` struct to write data.
+ * @retval None.
  * */
 void BMP180_get_altitude(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
@@ -174,8 +205,12 @@ void BMP180_get_altitude(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 
 /**
  * @brief Set sea pressure.
+ * @param hi2cx I2C handle.
+ * @param bmp180 `bmp180_t` struct to write data.
+ * @param sea_pressure New sea pressure.
+ * @retval None.
  * */
-void BMP180_set_sea_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, uint32_t sea_pressure)
+void BMP180_set_sea_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, float sea_pressure)
 {
 	bmp180->sea_pressure = sea_pressure;
 }
