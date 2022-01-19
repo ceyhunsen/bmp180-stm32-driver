@@ -28,7 +28,6 @@ static int32_t BMP180_read_up(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
  * @returns 0 on success, 1 on sensor is not ready, 2 on sensor error.
  * @param hi2cx I2C handle.
  * @param bmp180 `bmp180_t` struct to initialize.
- * @param oss Over sampling setting.
  * */
 uint8_t BMP180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
