@@ -144,7 +144,7 @@ static int32_t BMP180_read_up(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 }
 
 /**
- * @brief Get temperature data.
+ * @brief Get temperature data as celsius.
  * @param hi2cx I2C handle.
  * @param bmp180 `bmp180_t` struct to write data.
  * @retval None.
@@ -161,7 +161,7 @@ void BMP180_get_temperature(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 }
 
 /**
- * @brief Get pressure data.
+ * @brief Get pressure data as pascal.
  * @param hi2cx I2C handle.
  * @param bmp180 `bmp180_t` struct to write data.
  * @retval None.
@@ -193,24 +193,24 @@ void BMP180_get_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 }
 
 /**
- * @brief Get altitude data.
+ * @brief Get altitude data as meter.
  * @param hi2cx I2C handle.
  * @param bmp180 `bmp180_t` struct to write data.
  * @retval None.
  * */
 void BMP180_get_altitude(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 {
-	bmp180->altitude = 44330 * (1 - pow((bmp180->pressure / bmp180->sea_pressure), 1 / 5.255));
+	bmp180->altitude = 44330 * (1 - pow(((float)bmp180->pressure / (float)bmp180->sea_pressure), 1 / 5.255));
 }
 
 /**
- * @brief Set sea pressure.
+ * @brief Set sea pressure as pascal.
  * @param hi2cx I2C handle.
  * @param bmp180 `bmp180_t` struct to write data.
  * @param sea_pressure New sea pressure.
  * @retval None.
  * */
-void BMP180_set_sea_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, float sea_pressure)
+void BMP180_set_sea_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, int32_t sea_pressure)
 {
 	bmp180->sea_pressure = sea_pressure;
 }

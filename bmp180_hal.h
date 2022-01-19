@@ -17,7 +17,7 @@
 #include <stdint.h>
 
 /**
- * @enum _BMP180_oversampling_settings bmp180_hal.h bmp180_hal.h
+ * @enum _BMP180_oversampling_settings
  * @brief Oversampling settings for BMP180 sensor.
  * */
 enum _BMP180_oversampling_settings {
@@ -34,9 +34,9 @@ enum _BMP180_oversampling_settings {
 typedef struct bmp180_t {
 	// Sensor data
 	float temperature;
-	float pressure;
+	int32_t pressure;
 	float altitude;
-	float sea_pressure;
+	int32_t sea_pressure;
 
 	// Settings
 	enum _BMP180_oversampling_settings oversampling_setting;
@@ -66,6 +66,6 @@ void BMP180_get_all(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
 void BMP180_get_temperature(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
 void BMP180_get_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
 void BMP180_get_altitude(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
-void BMP180_set_sea_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, float sea_pressure);
+void BMP180_set_sea_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, int32_t sea_pressure);
 
 #endif
