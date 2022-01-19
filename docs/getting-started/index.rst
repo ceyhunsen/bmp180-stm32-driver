@@ -9,6 +9,13 @@ Adding to Your Project
 3. Change ``HAL_LIB`` definition in ``bmp180_hal.h`` (line 14) to your MCU's HAL library (e.g. ``"stm32f4xx_hal.h"``).
 4. Compile ``bmp180_hal.c`` to an object file and link it to your main executable.
 
+Units
+^^^^^
+
+* Temperature: Celsius
+* Pressure: Pascal
+* Altitude: Meter
+
 Simple Usage
 ^^^^^^^^^^^^
 
