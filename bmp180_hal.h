@@ -61,11 +61,11 @@ typedef struct bmp180_t {
 	int16_t  MD;
 } bmp180_t;
 
-uint8_t BMP180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
-void BMP180_get_all(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
-void BMP180_get_temperature(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
-void BMP180_get_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
-void BMP180_get_altitude(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
-void BMP180_set_sea_pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, int32_t sea_pressure);
+uint8_t BMP180_Init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void BMP180_Get_All(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void BMP180_Get_Temperature(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void BMP180_Get_Pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void BMP180_Get_Altitude(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void BMP180_Set_Sea_Pressure(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180, int32_t sea_pressure);
 
 #endif
