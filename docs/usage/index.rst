@@ -15,13 +15,13 @@ Simple Usage
 .. code-block:: c
 
 	// Define bmp180_t struct instance
-	bmp180_t bmp180 = {.oversampling_setting = standart};
+	bmp180_t bmp180;
 
 	// Wait till initialization is complete
 	while (BMP180_init(&hi2c1, &bmp180));
 
 	// Get all the values
-	BMP180_get_all(&hi2c1, &bmp180);
+	BMP180_get_all(&bmp180);
 	float temperature = bmp180.temperature;
-	float pressure = bmp180.pressure;
+	int32_t pressure = bmp180.pressure;
 	float altitude = bmp180.altitude;
