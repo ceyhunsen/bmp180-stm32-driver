@@ -9,13 +9,6 @@
 #include "bmp180.h"
 #include <stdint.h>
 
-/**
- * @def I2C_LIB
- * Library that includes I2C functions.
- * Change this definition to your MCU's I2C HAL library. E.g. "stm32f4xx_hal.h".
- * */
-#define I2C_LIB "stm32f4xx_hal.h"
-
 // Slave address
 #define BMP180_7_BIT_ADDRESS         0b1110111
 #define BMP180_ADDRESS              (BMP180_7_BIT_ADDRESS << 1)

@@ -7,13 +7,13 @@
 #define __BMP180_H
 
 /**
- * @def HAL_LIB
- * HAL library.
- * Change this definition to your MCU's HAL library. E.g. "stm32f4xx_hal.h".
+ * @def I2C_LIB
+ * Library that includes I2C functions.
+ * Change this definition to your MCU's I2C HAL library. E.g. "stm32f4xx_hal.h".
  * */
-#define HAL_LIB "stm32f4xx_hal.h"
+#define I2C_LIB "stm32f4xx_hal.h"
 
-#include HAL_LIB
+#include I2C_LIB
 #include <stdint.h>
 
 /**
