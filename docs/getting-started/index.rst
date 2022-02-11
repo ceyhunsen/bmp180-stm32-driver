@@ -117,7 +117,7 @@ If you want to measure altitude from any take-off point, first measure pressure 
 	float higher_altitude_than_ground = bmp180.altitude;
 	// ...
 
-Interface
-"""""""""
+I2C Interface
+"""""""""""""
 
-BMP180 sensor only supports I2C interface. So, this driver is using STM32's I2C HAL libraries.
+BMP180 sensor only supports I2C interface. So, this driver uses STM32's I2C HAL libraries. If you want to change it to LL drivers, modify ``bmp180_read()``, ``bmp180_write()`` and ``bmp180_is_ready()`` functions.

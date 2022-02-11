@@ -6,6 +6,21 @@
 #include "bmp180_internals.h"
 #include <math.h>
 
+static void bmp180_read(bmp180_t *bmp180, uint8_t reg, uint8_t *buffer, uint8_t size)
+{
+	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, reg, 1, buffer, size, HAL_MAX_DELAY);
+}
+
+static void bmp180_write(bmp180_t *bmp180, uint8_t reg, uint8_t *buffer, uint8_t size)
+{
+	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, reg, 1, buffer, size, HAL_MAX_DELAY);
+}
+
+static int bmp180_is_ready(bmp180_t *bmp180)
+{
+	return HAL_I2C_IsDeviceReady(bmp180->hi2cx, BMP180_ADDRESS, 1, HAL_MAX_DELAY);
+}
+
 /**
  * @brief Initialize sensor and get calibration values.
  * @returns 0 on success, 1 on sensor is not ready, 2 on sensor error.
@@ -17,24 +32,24 @@ uint8_t bmp180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 	bmp180->hi2cx = hi2cx;
 
 	// Check if device is ready
-	if (HAL_I2C_IsDeviceReady(bmp180->hi2cx, BMP180_ADDRESS, 1, HAL_MAX_DELAY) != HAL_OK)
+	if (bmp180_is_ready(bmp180))
 		return 1;
 
 	uint8_t buffer[22];
 
 	// Reset sensor
 	buffer[0] = 0xB6;
-	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, SOFT, 1, &buffer[0], 1, HAL_MAX_DELAY);
+	bmp180_write(bmp180, SOFT, &buffer[0], 1);
 	HAL_Delay(10);
 
 	// Check if device ID is correct
-	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, ID, 1, buffer, 1, HAL_MAX_DELAY);
+	bmp180_read(bmp180, ID, &buffer[0], 1);
 	if (buffer[0] != 0x55) {
 		return 2;
 	}
 
 	// Get calibration data
-	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, CALIB, 1, buffer, 22, HAL_MAX_DELAY);
+	bmp180_read(bmp180, CALIB, buffer, 22);
 
 	// If any of the calibration data is 0x00 or 0xFF, sensor is damaged
 	for (uint8_t i = 0; i < 22; i += 2) {
@@ -102,9 +117,9 @@ static int16_t _bmp180_read_ut(bmp180_t *bmp180)
 {
 	uint8_t write_data = 0x2E, ut_data[2];
 
-	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, CTRL_MEAS, 1, &write_data, 1, HAL_MAX_DELAY);
+	bmp180_write(bmp180, CTRL_MEAS, &write_data, 1);
 	HAL_Delay(5);
-	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, OUT_MSB, 1, ut_data, 2, HAL_MAX_DELAY);
+	bmp180_read(bmp180, OUT_MSB, ut_data, 2);
 
 	return (convert8bitto16bit(ut_data[0], ut_data[1]));
 }
@@ -112,7 +127,7 @@ static int16_t _bmp180_read_ut(bmp180_t *bmp180)
 static int32_t _bmp180_read_up(bmp180_t *bmp180)
 {
 	uint8_t write_data = 0x34 + (bmp180->oss << 6), up_data[3];
-	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, CTRL_MEAS, 1, &write_data, 1, HAL_MAX_DELAY);
+	bmp180_write(bmp180, CTRL_MEAS, &write_data, 1);
 	uint8_t wait = 0;
 	switch (bmp180->oversampling_setting) {
 		case ultra_low_power:
@@ -132,7 +147,7 @@ static int32_t _bmp180_read_up(bmp180_t *bmp180)
 			break;
 	}
 	HAL_Delay(wait);
-	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, OUT_MSB, 1, up_data, 3, HAL_MAX_DELAY);
+	bmp180_read(bmp180, OUT_MSB, up_data, 3);
 
 	return ((up_data[0] << 16) + (up_data[1] << 8) + up_data[2]) >> (8 - bmp180->oss);
 }
