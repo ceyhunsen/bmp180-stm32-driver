@@ -27,7 +27,7 @@
 #define powerof2(x)                 (1 << (x))
 
 // Private function prototypes
-static int16_t _BMP180_Read_ut(bmp180_t *bmp180);
-static int32_t _BMP180_Read_up(bmp180_t *bmp180);
+static int16_t _bmp180_read_ut(bmp180_t *bmp180);
+static int32_t _bmp180_read_up(bmp180_t *bmp180);
 
 #endif // __BMP180_INTERNALS_H

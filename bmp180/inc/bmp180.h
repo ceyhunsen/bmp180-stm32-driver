@@ -17,10 +17,10 @@
 #include <stdint.h>
 
 /**
- * @enum _BMP180_oversampling_settings
+ * @enum _bmp180_oversampling_settings
  * @brief Oversampling settings for BMP180 sensor.
  * */
-enum _BMP180_oversampling_settings {
+enum _bmp180_oversampling_settings {
 	ultra_low_power,
 	standart,
 	high_resolution,
@@ -28,7 +28,7 @@ enum _BMP180_oversampling_settings {
 };
 
 /**
- * @struct bmp180_t bmp180_hal.h bmp180_hal.h
+ * @struct bmp180_t bmp180.h bmp180.h
  * @brief Holds sensor data, sensor settings and callibration values.
  * */
 typedef struct bmp180_t {
@@ -42,7 +42,7 @@ typedef struct bmp180_t {
 	int32_t  sea_pressure;
 
 	// Settings
-	enum _BMP180_oversampling_settings oversampling_setting;
+	enum _bmp180_oversampling_settings oversampling_setting;
 	uint8_t  oss;
 
 	// Callibration data
@@ -64,11 +64,11 @@ typedef struct bmp180_t {
 	int16_t  MD;
 } bmp180_t;
 
-uint8_t BMP180_Init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
-void BMP180_Get_All(bmp180_t *bmp180);
-void BMP180_Get_Temperature(bmp180_t *bmp180);
-void BMP180_Get_Pressure(bmp180_t *bmp180);
-void BMP180_Get_Altitude(bmp180_t *bmp180);
-void BMP180_Set_Sea_Pressure(bmp180_t *bmp180, int32_t sea_pressure);
+uint8_t bmp180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180);
+void bmp180_get_all(bmp180_t *bmp180);
+void bmp180_get_temperature(bmp180_t *bmp180);
+void bmp180_get_pressure(bmp180_t *bmp180);
+void bmp180_get_altitude(bmp180_t *bmp180);
+void bmp180_set_sea_pressure(bmp180_t *bmp180, int32_t sea_pressure);
 
 #endif // BMP180_H
