@@ -7,7 +7,7 @@
 #include <math.h>
 
 /**
- * @brief Initialize sensor and get callibration values.
+ * @brief Initialize sensor and get calibration values.
  * @returns 0 on success, 1 on sensor is not ready, 2 on sensor error.
  * @param hi2cx I2C handle.
  * @param bmp180 `bmp180_t` struct to initialize.
@@ -22,15 +22,21 @@ uint8_t BMP180_Init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 
 	uint8_t buffer[22];
 
+	// Reset sensor
+	buffer[0] = 0xB6;
+	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, SOFT, 1, &buffer[0], 1, HAL_MAX_DELAY);
+	HAL_Delay(10);
+
 	// Check if device ID is correct
-	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, CHIP_ID, 1, buffer, 1, HAL_MAX_DELAY);
+	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, ID, 1, buffer, 1, HAL_MAX_DELAY);
 	if (buffer[0] != 0x55) {
 		return 2;
 	}
 
-	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, CALLIBRATION_COEF_REGISTERS, 1, buffer, 22, HAL_MAX_DELAY);
+	// Get calibration data
+	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, CALIB, 1, buffer, 22, HAL_MAX_DELAY);
 
-	// If any of the callibration data is 0x00 or 0xFF, the sensor is damaged
+	// If any of the calibration data is 0x00 or 0xFF, sensor is damaged
 	for (uint8_t i = 0; i < 22; i += 2) {
 		uint16_t combined_callibration_data = convert8bitto16bit(buffer[i], buffer[i + 1]);
 		if (combined_callibration_data == 0x00 || combined_callibration_data == 0XFF) {
@@ -38,6 +44,7 @@ uint8_t BMP180_Init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 		}
 	}
 
+	// Set hardware oversampling setting
 	switch (bmp180->oversampling_setting) {
 		case ultra_low_power:
 			bmp180->oss = 0;
@@ -57,6 +64,7 @@ uint8_t BMP180_Init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 			break;
 	}
 
+	// Save calibration data
 	bmp180->AC1 = convert8bitto16bit(buffer[0],  buffer[1]);
 	bmp180->AC2 = convert8bitto16bit(buffer[2],  buffer[3]);
 	bmp180->AC3 = convert8bitto16bit(buffer[4],  buffer[5]);
@@ -74,6 +82,7 @@ uint8_t BMP180_Init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 	bmp180->MC  = convert8bitto16bit(buffer[18], buffer[19]);
 	bmp180->MD  = convert8bitto16bit(buffer[20], buffer[21]);
 	bmp180->sea_pressure = 101325;
+
 	return 0;
 }
 
@@ -93,16 +102,17 @@ static int16_t _BMP180_Read_ut(bmp180_t *bmp180)
 {
 	uint8_t write_data = 0x2E, ut_data[2];
 
-	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, 0xF4, 1, &write_data, 1, HAL_MAX_DELAY);
+	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, CTRL_MEAS, 1, &write_data, 1, HAL_MAX_DELAY);
 	HAL_Delay(5);
-	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, 0xF6, 1, ut_data, 2, HAL_MAX_DELAY);
+	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, OUT_MSB, 1, ut_data, 2, HAL_MAX_DELAY);
+
 	return (convert8bitto16bit(ut_data[0], ut_data[1]));
 }
 
 static int32_t _BMP180_Read_up(bmp180_t *bmp180)
 {
 	uint8_t write_data = 0x34 + (bmp180->oss << 6), up_data[3];
-	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, 0xF4, 1, &write_data, 1, HAL_MAX_DELAY);
+	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, CTRL_MEAS, 1, &write_data, 1, HAL_MAX_DELAY);
 	uint8_t wait = 0;
 	switch (bmp180->oversampling_setting) {
 		case ultra_low_power:
@@ -122,12 +132,13 @@ static int32_t _BMP180_Read_up(bmp180_t *bmp180)
 			break;
 	}
 	HAL_Delay(wait);
-	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, 0xF6, 1, up_data, 3, HAL_MAX_DELAY);
+	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, OUT_MSB, 1, up_data, 3, HAL_MAX_DELAY);
+
 	return ((up_data[0] << 16) + (up_data[1] << 8) + up_data[2]) >> (8 - bmp180->oss);
 }
 
 /**
- * @brief Get temperature data as celsius.
+ * @brief Get temperature data.
  * @param bmp180 `bmp180_t` struct to write data.
  * @retval None.
  * */
@@ -143,7 +154,7 @@ void BMP180_Get_Temperature(bmp180_t *bmp180)
 }
 
 /**
- * @brief Get pressure data as pascal.
+ * @brief Get pressure data.
  * @param bmp180 `bmp180_t` struct to write data.
  * @retval None.
  * */
@@ -174,7 +185,7 @@ void BMP180_Get_Pressure(bmp180_t *bmp180)
 }
 
 /**
- * @brief Get altitude data as meter.
+ * @brief Calculate altitude from pressure data.
  * @param bmp180 `bmp180_t` struct to write data.
  * @retval None.
  * */
@@ -184,7 +195,7 @@ void BMP180_Get_Altitude(bmp180_t *bmp180)
 }
 
 /**
- * @brief Set sea pressure as pascal.
+ * @brief Set sea pressure.
  * @param bmp180 `bmp180_t` struct to write data.
  * @param sea_pressure New sea pressure.
  * @retval None.

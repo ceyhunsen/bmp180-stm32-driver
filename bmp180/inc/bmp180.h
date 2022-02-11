@@ -36,14 +36,14 @@ typedef struct bmp180_t {
 	I2C_HandleTypeDef *hi2cx;
 
 	// Sensor data
-	float temperature;
-	int32_t pressure;
-	float altitude;
-	int32_t sea_pressure;
+	float    temperature;
+	int32_t  pressure;
+	float    altitude;
+	int32_t  sea_pressure;
 
 	// Settings
 	enum _BMP180_oversampling_settings oversampling_setting;
-	uint8_t   oss;
+	uint8_t  oss;
 
 	// Callibration data
 	int16_t  AC1;
@@ -71,4 +71,4 @@ void BMP180_Get_Pressure(bmp180_t *bmp180);
 void BMP180_Get_Altitude(bmp180_t *bmp180);
 void BMP180_Set_Sea_Pressure(bmp180_t *bmp180, int32_t sea_pressure);
 
-#endif
+#endif // BMP180_H

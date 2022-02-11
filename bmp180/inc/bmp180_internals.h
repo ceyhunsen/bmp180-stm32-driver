@@ -10,12 +10,17 @@
 #include <stdint.h>
 
 // Slave address
-#define BMP180_7_BIT_ADDRESS         0b1110111
-#define BMP180_ADDRESS              (BMP180_7_BIT_ADDRESS << 1)
+#define BMP180_7_BIT_ADDRESS 0b1110111
+#define BMP180_ADDRESS      (BMP180_7_BIT_ADDRESS << 1)
 
 // Registers
-#define CALLIBRATION_COEF_REGISTERS  0xAA
-#define CHIP_ID                      0xD0
+#define CALIB     0xAA
+#define ID        0xD0
+#define SOFT      0xE0
+#define CTRL_MEAS 0xF4
+#define OUT_MSB   0xF6
+#define OUT_LSB   0xF7
+#define OUT_XLSB  0xF8
 
 // Private defines
 #define convert8bitto16bit(x, y)  (((x) << 8) | (y))
