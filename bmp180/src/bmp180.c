@@ -3,25 +3,8 @@
  * @author Ceyhun Şen
  * */
 
-#include "bmp180.h"
+#include "bmp180_internals.h"
 #include <math.h>
-
-// Slave address
-#define BMP180_7_BIT_ADDRESS         0b1110111
-#define BMP180_ADDRESS              (BMP180_7_BIT_ADDRESS << 1)
-
-// Registers
-#define CALLIBRATION_COEF_REGISTERS  0xAA
-#define CHIP_ID                      0xD0
-
-// Private defines and functions
-#define cnvrt8to16(x, y) (((x) << 8) | (y))
-#define powerof2(x)      (1 << (x))
-
-// Private function prototypes
-static int16_t _BMP180_Read_ut(bmp180_t *bmp180);
-static int32_t _BMP180_Read_up(bmp180_t *bmp180);
-
 
 /**
  * @brief Initialize sensor and get callibration values.
@@ -49,7 +32,7 @@ uint8_t BMP180_Init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 
 	// If any of the callibration data is 0x00 or 0xFF, the sensor is damaged
 	for (uint8_t i = 0; i < 22; i += 2) {
-		uint16_t combined_callibration_data = cnvrt8to16(buffer[i], buffer[i + 1]);
+		uint16_t combined_callibration_data = convert8bitto16bit(buffer[i], buffer[i + 1]);
 		if (combined_callibration_data == 0x00 || combined_callibration_data == 0XFF) {
 			return 2;
 		}
@@ -74,22 +57,22 @@ uint8_t BMP180_Init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 			break;
 	}
 
-	bmp180->AC1 = cnvrt8to16(buffer[0],  buffer[1]);
-	bmp180->AC2 = cnvrt8to16(buffer[2],  buffer[3]);
-	bmp180->AC3 = cnvrt8to16(buffer[4],  buffer[5]);
-	bmp180->AC4 = cnvrt8to16(buffer[6],  buffer[7]);
-	bmp180->AC5 = cnvrt8to16(buffer[8],  buffer[9]);
-	bmp180->AC6 = cnvrt8to16(buffer[10], buffer[11]);
-	bmp180->B1  = cnvrt8to16(buffer[12], buffer[13]);
-	bmp180->B2  = cnvrt8to16(buffer[14], buffer[15]);
+	bmp180->AC1 = convert8bitto16bit(buffer[0],  buffer[1]);
+	bmp180->AC2 = convert8bitto16bit(buffer[2],  buffer[3]);
+	bmp180->AC3 = convert8bitto16bit(buffer[4],  buffer[5]);
+	bmp180->AC4 = convert8bitto16bit(buffer[6],  buffer[7]);
+	bmp180->AC5 = convert8bitto16bit(buffer[8],  buffer[9]);
+	bmp180->AC6 = convert8bitto16bit(buffer[10], buffer[11]);
+	bmp180->B1  = convert8bitto16bit(buffer[12], buffer[13]);
+	bmp180->B2  = convert8bitto16bit(buffer[14], buffer[15]);
 	bmp180->B3  = 0;
 	bmp180->B4  = 0;
 	bmp180->B5  = 0;
 	bmp180->B6  = 0;
 	bmp180->B7  = 0;
-	bmp180->MB  = cnvrt8to16(buffer[16], buffer[17]);
-	bmp180->MC  = cnvrt8to16(buffer[18], buffer[19]);
-	bmp180->MD  = cnvrt8to16(buffer[20], buffer[21]);
+	bmp180->MB  = convert8bitto16bit(buffer[16], buffer[17]);
+	bmp180->MC  = convert8bitto16bit(buffer[18], buffer[19]);
+	bmp180->MD  = convert8bitto16bit(buffer[20], buffer[21]);
 	bmp180->sea_pressure = 101325;
 	return 0;
 }
@@ -113,7 +96,7 @@ static int16_t _BMP180_Read_ut(bmp180_t *bmp180)
 	HAL_I2C_Mem_Write(bmp180->hi2cx, BMP180_ADDRESS, 0xF4, 1, &write_data, 1, HAL_MAX_DELAY);
 	HAL_Delay(5);
 	HAL_I2C_Mem_Read(bmp180->hi2cx, BMP180_ADDRESS, 0xF6, 1, ut_data, 2, HAL_MAX_DELAY);
-	return (cnvrt8to16(ut_data[0], ut_data[1]));
+	return (convert8bitto16bit(ut_data[0], ut_data[1]));
 }
 
 static int32_t _BMP180_Read_up(bmp180_t *bmp180)

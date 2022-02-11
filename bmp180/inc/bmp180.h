@@ -1,5 +1,5 @@
 /**
- * @file bmp180_hal.h
+ * @file
  * @author Ceyhun Şen
  * */
 
