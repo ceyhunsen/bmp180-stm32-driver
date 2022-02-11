@@ -3,7 +3,7 @@
  * @author Ceyhun Şen
  * */
 
-#include "bmp180_hal.h"
+#include "bmp180.h"
 #include <math.h>
 
 // Slave address

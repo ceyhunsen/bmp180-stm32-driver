@@ -1,5 +1,5 @@
 API Reference
 =============
 
-.. doxygenfile:: bmp180_hal.h
+.. doxygenfile:: bmp180.h
    :project: bmp180-driver

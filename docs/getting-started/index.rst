@@ -1,13 +1,13 @@
-Getting-Started
+Getting Started
 ===============
 
 Adding to Your Project
 ^^^^^^^^^^^^^^^^^^^^^^
 
-1. Copy `bmp180_hal.c <https://github.com/ceyhunsen/bmp180-stm32-driver/blob/main/bmp180_hal.c>`_ to your projects source directory.
-2. Copy `bmp180_hal.h <https://github.com/ceyhunsen/bmp180-stm32-driver/blob/main/bmp180_hal.h>`_ to your projects include directory.
-3. Change ``HAL_LIB`` definition in ``bmp180_hal.h`` (line 14) to your MCU's HAL library (e.g. ``"stm32f4xx_hal.h"``).
-4. Compile ``bmp180_hal.c`` to an object file and link it to your main executable.
+1. Copy ``bmp180`` directory to your ``drivers`` directory.
+2. Add every .c file to your projects source directory.
+3. Add ``bmp180/inc/`` directory to your projects include path. 
+4. Change ``HAL_LIB`` definition in ``bmp180/inc/bmp180.h`` (line 14) to your MCU's HAL library (e.g. ``"stm32f4xx_hal.h"``).
 
 Units
 ^^^^^
