@@ -29,7 +29,7 @@ enum _bmp180_oversampling_settings {
 
 /**
  * @struct bmp180_t bmp180.h bmp180.h
- * @brief Holds sensor data, sensor settings and callibration values.
+ * @brief Holds sensor data, sensor settings and calibration values.
  * */
 typedef struct bmp180_t {
 	// I2C handle
@@ -45,7 +45,7 @@ typedef struct bmp180_t {
 	enum _bmp180_oversampling_settings oversampling_setting;
 	uint8_t  oss;
 
-	// Callibration data
+	// Calibration data
 	int16_t  AC1;
 	int16_t  AC2;
 	int16_t  AC3;

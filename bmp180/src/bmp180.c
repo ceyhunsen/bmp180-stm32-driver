@@ -38,8 +38,8 @@ uint8_t bmp180_init(I2C_HandleTypeDef *hi2cx, bmp180_t *bmp180)
 
 	// If any of the calibration data is 0x00 or 0xFF, sensor is damaged
 	for (uint8_t i = 0; i < 22; i += 2) {
-		uint16_t combined_callibration_data = convert8bitto16bit(buffer[i], buffer[i + 1]);
-		if (combined_callibration_data == 0x00 || combined_callibration_data == 0XFF) {
+		uint16_t combined_calibration_data = convert8bitto16bit(buffer[i], buffer[i + 1]);
+		if (combined_calibration_data == 0x00 || combined_calibration_data == 0XFF) {
 			return 2;
 		}
 	}
