@@ -7,7 +7,7 @@ Adding to Your Project
 1. Copy ``bmp180`` directory to your projects ``drivers`` directory.
 2. Add ``bmp180.c`` file to your projects source files.
 3. Add ``bmp180/inc/`` directory to your projects include path. 
-4. Change ``HAL_LIB`` definition in ``bmp180/inc/bmp180.h`` (line 14) to your MCU's HAL library (e.g. ``"stm32f4xx_hal.h"``).
+4. Change ``I2C_LIB`` definition in ``bmp180/inc/bmp180.h`` (line 14) to your MCU's I2C HAL library (e.g. ``"stm32f4xx_hal.h"``).
 
 Units
 ^^^^^
