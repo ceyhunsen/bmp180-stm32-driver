@@ -29,8 +29,11 @@ float altitude = bmp180.altitude;
 Documentation is available [online](https://bmp180-stm32-driver.readthedocs.io/en/latest/) and it includes information for:
 
 * Adding to your project
+* Units
 * Usage
-* API reference.
+* Hardware oversampling
+* Sea pressure
+* API reference
 
 # License
 

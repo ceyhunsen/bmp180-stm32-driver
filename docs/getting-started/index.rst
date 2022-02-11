@@ -88,7 +88,7 @@ For example if you want to change it to ``ultra high resolution``:
 	bmp180_init(&hi2c1, &bmp180);
 
 .. warning::
-	If you don't call ``bmp180_Init()`` function after changing setting, oversampling won't change.
+	If you don't call ``bmp180_init()`` function after changing setting, oversampling won't change.
 
 Sea Pressure
 ^^^^^^^^^^^^
