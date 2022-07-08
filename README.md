@@ -2,6 +2,9 @@
 
 STM32 driver for BMP180 barometric pressure/temperature/altitude sensor. This driver lets you measure temperature, pressure, altitude and set custom sea pressure for calculating altitude for your needs.
 
+> **Warning**
+> This project is abandoned. Although it still works for basic projects, it is a better idea to use [Bosch's own driver](https://github.com/BoschSensortec/BMP180_driver).
+
 ## Units
 
 * Temperature: Celsius
